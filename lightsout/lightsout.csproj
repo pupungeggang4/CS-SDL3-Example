@@ -12,6 +12,7 @@
     <PackageReference Include="SDL3-CS.MacOS" Version="3.4.14.1" />
     <PackageReference Include="SDL3-CS.MacOS.Image" Version="3.4.4.10" />
     <PackageReference Include="SDL3-CS.Windows" Version="3.4.14.1" />
+    <PackageReference Include="SDL3-CS.Windows.Image" Version="3.4.4.10" />
   </ItemGroup>
 
 </Project>

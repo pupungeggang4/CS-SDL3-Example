@@ -18,30 +18,34 @@ public class Game
             return;
         }
 
-        if (!SDL.CreateWindowAndRenderer("Lights Out Puzzle", 800, 600, 0, out Window, out Renderer))
-        {
-            SDL.LogError(SDL.LogCategory.Application, $"Error creating window and rendering: {SDL.GetError()}");
-            return;
-        }
+        Window = SDL.CreateWindow("Lights Out", 800, 600, 0);
+        float currentScale = SDL.GetWindowDisplayScale(Window);
+        SDL.SetWindowSize(Window, (int)(800 * currentScale), (int)(600 * currentScale));
+        SDL.SetWindowPosition(Window, (int)SDL.WindowPosCentered(), (int)SDL.WindowPosCentered());
+        Renderer = SDL.CreateRenderer(Window, null);
+        
+        SDL.SetRenderLogicalPresentation(Renderer, 800, 600, SDL.RendererLogicalPresentation.Letterbox);
         TextureOn = Image.LoadTexture(Renderer, "asset/on.png");
         TextureOff = Image.LoadTexture(Renderer, "asset/off.png");
     }
 
     public void Run()
     {
-        Board = new Board();    
+        Board = new Board();
     }
 
     public void Loop()
     {
         while (SDL.PollEvent(out var e))
         {
+            SDL.ConvertEventToRenderCoordinates(Renderer, ref e);
             if ((SDL.EventType)e.Type == SDL.EventType.Quit)
             {
                 Running = false;
             }
             if ((SDL.EventType)e.Type == SDL.EventType.MouseButtonUp)
             {
+
                 uint button = e.Button.Button;
                 float x = e.Button.X;
                 float y = e.Button.Y;
